@@ -9,12 +9,14 @@ import Product from "../models/product.model.js";
 
 const router = express.Router();
 
+// Consolidated GET route for fetching all products or filtering by category (case-insensitive)
 router.get("/", async (req, res) => {
   const { category } = req.query;
   try {
     let products;
     if (category) {
-      products = await Product.find({ category: category });
+      // Case-insensitive search for the category using $regex
+      products = await Product.find({ category: { $regex: new RegExp(category, "i") } });
     } else {
       products = await Product.find();
     }
@@ -24,6 +26,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
+
 
 router.post("/", auth, admin, addProduct);
 router.put("/:id", auth, admin, updateProduct);
