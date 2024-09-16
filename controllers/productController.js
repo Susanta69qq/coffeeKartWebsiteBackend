@@ -9,6 +9,18 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
+export const getProductById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const product = await Product.findById(id);
+    if (!product) return res.status(404).json({ msg: "Product not found" });
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
 export const addProduct = async (req, res) => {
   const { name, description, price, category, image } = req.body;
 

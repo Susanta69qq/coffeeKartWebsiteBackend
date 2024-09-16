@@ -3,6 +3,7 @@ import {
   addProduct,
   updateProduct,
   deleteProduct,
+  getProductById,
 } from "../controllers/productController.js";
 import { auth, admin } from "../middlewares/auth.middleware.js";
 import Product from "../models/product.model.js";
@@ -16,7 +17,9 @@ router.get("/", async (req, res) => {
     let products;
     if (category) {
       // Case-insensitive search for the category using $regex
-      products = await Product.find({ category: { $regex: new RegExp(category, "i") } });
+      products = await Product.find({
+        category: { $regex: new RegExp(category, "i") },
+      });
     } else {
       products = await Product.find();
     }
@@ -27,6 +30,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", getProductById);
 
 router.post("/", auth, admin, addProduct);
 router.put("/:id", auth, admin, updateProduct);
