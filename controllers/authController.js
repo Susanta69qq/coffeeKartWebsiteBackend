@@ -44,7 +44,7 @@ export const login = async (req, res) => {
 
 export const getMe = async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select("-password");
+    const user = await User.findById(req.user._id).select("-password");
     if (!user) return res.status(404).json({ msg: "User not found" });
     res.json({ name: `${user.firstName} ${user.lastName}`, email: user.email });
   } catch (error) {
