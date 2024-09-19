@@ -22,7 +22,7 @@ export const getUserOrders = async (req, res) => {
     const orders = await Order.find({ user: req.user._id }).populate(
       "products.product"
     );
-    res.json(orders);
+    res.json(orders); 
   } catch (error) {
     res.status(500).json({ msg: "Server error" });
   }
