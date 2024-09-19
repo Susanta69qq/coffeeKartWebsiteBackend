@@ -1,23 +1,28 @@
 import jwt from "jsonwebtoken";
 
-// Auth middleware to validate token and store user in req
 const auth = (req, res, next) => {
   const token = req.header("x-auth-token");
 
-  if (!token) return res.status(401).json({ msg: "No token, authorization denied" });
+  // Check if there's no token
+  if (!token)
+    return res.status(401).json({ msg: "No token, authorization denied" });
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);        
-    req.user = { id: decoded.userId }; // Store decoded userId in req.user
-    next();
+    // Verify the token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    // Attach the decoded user ID to req.user as _id
+    req.user = { _id: decoded.userId };
+
+    next();  // Proceed to the next middleware
   } catch (error) {
     res.status(401).json({ msg: "Token is not valid" });
   }
 };
 
-// Admin middleware to check if the user is an admin
 const admin = (req, res, next) => {
-  const isAdmin = req.user.id === "66e58b62ad883ac8a7e17e62";
+  // Hardcoded admin check by userId
+  const isAdmin = req.user._id === "66e58b62ad883ac8a7e17e62";
 
   if (!isAdmin) return res.status(403).json({ msg: "Access Denied" });
   next();
