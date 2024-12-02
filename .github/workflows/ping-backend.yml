@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Ping
-        run: curl -X GET https://your-backend-url.onrender.com/health
+        run: curl -X GET https://coffeekartwebsitebackend.onrender.com/health
