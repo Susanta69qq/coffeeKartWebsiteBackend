@@ -2,7 +2,7 @@ name: Keep Render Backend Alive
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Runs every 10 minutes (adjust as needed)
+    - cron: "*/5 * * * *"
 
 jobs:
   ping:
