@@ -19,7 +19,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 
 app.get("/health", (req, res) => {
-  res.status(200).send("Ok");
+  res.status(200).send("Ok working");
 });
 
 const PORT = process.env.PORT || 8000;
