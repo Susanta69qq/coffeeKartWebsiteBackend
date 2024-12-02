@@ -1,0 +1,12 @@
+name: Keep Render Backend Alive
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # Runs every 10 minutes (adjust as needed)
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Ping
+        run: curl -X GET https://your-backend-url.onrender.com/health
